@@ -1,20 +1,18 @@
 #!/usr/bin/env python3
+
 """
-module
+Module for add_matrices2D.
 """
 
 
 def add_matrices2D(mat1, mat2):
-    """
-    function two lists
-    """
-
-    result = []
-
-    if len(arr1) != len(arr2):
+    """Adds 2 arrays."""
+    if len(mat1[0]) != len(mat2[0]):
         return None
-
-    for i in range(len(arr1)):
-        for j in range(len arr1[i]):
-            result.append(arr1[i][j] + arr2[i][j])
-    return result
+    new_mat = []
+    for row in range(len(mat1)):
+        trans = []
+        for col in range(len(mat1[0])):
+            trans.append(mat1[row][col] + mat2[row][col])
+        new_mat.append(trans)
+    return new_mat

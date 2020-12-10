@@ -1,13 +1,19 @@
 #!/usr/bin/env python3
-"""function"""
+"""
+module
+"""
 
 
 def add_arrays(arr1, arr2):
-    """add matrix"""
-    arr = [] 
-    if (len(arr1) == len(arr2)):
-        for i in range(len(arr1)):
-            arr[i] = arr1[i] + arr2[i]
-        return arr
-    else:
+    """
+    function two lists
+    """
+
+    result = []
+
+    if len(arr1) != len(arr2):
         return None
+
+    for i in range(len(arr1)):
+        result.append(arr1[i] + arr2[i])
+    return result

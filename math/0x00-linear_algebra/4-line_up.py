@@ -4,7 +4,6 @@
 
 def add_arrays(arr1, arr2):
     """add matrix"""
-    
     arr = [] 
     if (len(arr1) == len(arr2)):
         for i in range(len(arr1)):

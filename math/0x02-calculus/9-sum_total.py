@@ -8,6 +8,6 @@ def summation_i_squared(n):
     if(n > 1):
         for(i in range(1, n+1)):
             sum += i*i
-        return n
+        return sum
     else:
         return None

@@ -1,9 +1,17 @@
+
 #!/usr/bin/env python3
-"""function"""
+"""
+A function that calculates the derivative of a polynomial
+"""
 
 
 def poly_derivative(poly):
-    """poly"""
+    """
+    Returns a list of the derivative
+    >>> poly = [5, 3, 0, 1]
+    >>> print(poly_derivative(poly))
+    [3, 0, 3]
+    """
     if type(poly) is not list or poly == []:
         return None
     elif len(poly) < 2:

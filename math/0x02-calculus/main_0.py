@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-summation_i_squared = __import__('9-sum_total').summation_i_squared
+poly_derivative = __import__('10-matisse').poly_derivative
 
-n = 5
-print(summation_i_squared(n))
+poly = [5, 3, 0, 1]
+print(poly_derivative(poly))

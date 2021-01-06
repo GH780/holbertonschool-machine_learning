@@ -24,17 +24,26 @@ class Neuron:
         self.__b = 0
         self.__A = 0
 
-    @property 
-    def __w(self):
-        """getter function for w variable"""
-        return self.__w
+    @property
+    def W(self):
+        """
+        getter function for W
+        :return: weight vector neuron
+        """
+        return self.__W
 
     @property
-    def __b(self):
-        """getter function for b variable"""
+    def b(self):
+        """
+        getter function for b
+        :return: bias for neuron
+        """
         return self.__b
 
     @property
-    def __A(self):
-        """getter function for A variable"""
+    def A(self):
+        """
+        getter function for W
+        :return: activated output of the neuron
+        """
         return self.__A

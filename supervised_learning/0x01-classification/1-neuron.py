@@ -23,17 +23,17 @@ class Neuron:
         self.__W = np.random.randn(1, nx)
         self.__b = 0
         self.__A = 0
-    
+
     @property 
     def __w(self):
         """getter function for w variable"""
         return self.__w
-        
+
     @property
     def __b(self):
         """getter function for b variable"""
         return self.__b
-    
+
     @property
     def __A(self):
         """getter function for A variable"""

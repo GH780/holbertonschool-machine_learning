@@ -24,6 +24,40 @@ class Neuron:
         self.__b = 0
         self.__A = 0
 
+    def forward_prop(self, X):
+        """
+        calculates the forward propagation of the neuron
+        :param X: a np array with shape (nx, m) that contains the input data
+        :return: private attribute __A
+        """
+        preactivation = np.matmul(self.__W, X) + self.__b
+        self.__A = 1 / (1 + np.exp(-preactivation))
+        return self.__A
+
+    def cost(self, Y, A):
+        """
+        calculates the cost of the model using logistic regression
+        :param Y: a np array with shape (1, m) with correct labels
+        :param A: a np array with shape (1, m) containing the activated output
+        :return: the cost
+        """
+        cost = Y * np.log(A) + (1 - Y) * np.log(1.0000001 - A)
+        cost = np.sum(cost)
+        cost = - cost / A.shape[1]
+        return cost
+
+    def evaluate(self, X, Y):
+        """
+        evaluates the neuron prediction
+        :param X: np array with input data and shape (nx, m)
+        :param Y: np array with correct label and shape (1, m)
+        :return: neuron´s prediction and cost of the network
+        """
+        self.forward_prop(X)
+        prediction = np.where(self.__A >= 0.5, 1, 0)
+        cost = self.cost(Y, self.__A)
+        return prediction, cost
+
     @property
     def W(self):
         """
@@ -47,27 +81,3 @@ class Neuron:
         :return: activated output of the neuron
         """
         return self.__A
-
-    def forward_prop(self, X):
-        """forward propagation"""
-        z = np.matmul(self.__w, X) + self.__b
-        self.__A = 1/(1 + np.exp(-z))
-        return self.__A
-
-    def cost(self, Y, A):
-        """cost Function"""
-        cost = -np.sum((Y * np.log(A)) +
-                       ((1 - Y) * np.log(1.0000001 - A))) / Y.shape[1]
-        return cost
-
-    def evaluate(self, X, Y):
-        """
-        evaluates the neuron prediction
-        :param X: np array with input data and shape (nx, m)
-        :param Y: np array with correct label and shape (1, m)
-        :return: neuron´s prediction and cost of the network
-        """
-        self.forward_prop(X)
-        prediction = np.where(self.__A >= 0.5, 1, 0)
-        cost = self.cost(Y, self.__A)
-        return prediction, cost

@@ -59,3 +59,15 @@ class Neuron:
         cost = -np.sum((Y * np.log(A)) +
                        ((1 - Y) * np.log(1.0000001 - A))) / Y.shape[1]
         return cost
+
+    def evaluate(self, X, Y):
+        """
+        evaluates the neuron prediction
+        :param X: np array with input data and shape (nx, m)
+        :param Y: np array with correct label and shape (1, m)
+        :return: neuron´s prediction and cost of the network
+        """
+        self.forward_prop(X)
+        prediction = np.where(self.__A >= 0.5, 1, 0)
+        cost = self.cost(Y, self.__A)
+        return prediction, cost

@@ -1,4 +1,3 @@
-  
 #!/usr/bin/env python3
 """
 Trains a loaded neural network model using mini-batch gradient descent

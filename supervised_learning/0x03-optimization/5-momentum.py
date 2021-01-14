@@ -1,4 +1,3 @@
-  
 #!/usr/bin/env python3
 """
 Updates a variable using the gradient descent with momentum

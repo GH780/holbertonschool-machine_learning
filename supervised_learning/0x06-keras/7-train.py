@@ -1,4 +1,3 @@
-  
 #!/usr/bin/env python3
 """
 Updates the function train model with learning decay

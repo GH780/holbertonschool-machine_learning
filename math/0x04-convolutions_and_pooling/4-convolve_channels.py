@@ -1,4 +1,3 @@
-  
 #!/usr/bin/env python3
 """
 Performs a strided convolution on images with channels

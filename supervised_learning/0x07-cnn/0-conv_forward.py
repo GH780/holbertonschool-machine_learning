@@ -1,4 +1,3 @@
-  
 #!/usr/bin/env python3
 """
 Performs forward propagation over a convolutional layer of a neural network

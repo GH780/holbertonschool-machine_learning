@@ -14,6 +14,20 @@ class Yolo:
     def __init__(self, model_path, classes_path, class_t, nms_t, anchors):
         """
         :param self: instance of the class
+        :param model_path: is the path to where a Darknet Keras model is stored
+        :param classes_path: is the path to where the list of class names
+        used for the Darknet model, listed in order of index, can be found
+        :param class_t: is a float representing the box score threshold for
+        the initial filtering step
+        :param nms_t: is a float representing the IOU threshold for non-max
+        suppression
+        :param anchors: is a numpy.ndarray of shape (outputs, anchor_boxes,
+        2) containing all of the anchor boxes:
+            outputs is the number of outputs (predictions) made by the
+            Darknet model
+            anchor_boxes is the number of anchor boxes used for each prediction
+            2 => [anchor_box_width, anchor_box_height]
+        :return:
         """
         self.model = K.models.load_model(filepath=model_path)
         with open(classes_path, 'r') as f:
@@ -28,7 +42,11 @@ class Yolo:
 
     def process_outputs(self, outputs, image_size):
         """
-        :param outputs: is a list of numpy.ndarrays 
+        :param outputs: is a list of numpy.ndarrays containing the
+        predictions from the Darknet model for a single image
+        :param image_size: is a numpy.ndarray containing the image’s original
+        size [image_height, image_width]
+        :return: a tuple of (boxes, box_confidences, box_class_probs)
         """
         boxes = []
         box_confidence = []
@@ -102,6 +120,22 @@ class Yolo:
     def filter_boxes(self, boxes, box_confidences, box_class_probs):
         """
         filters the boxes
+        :param boxes: a list of numpy.ndarrays of shape (grid_height,
+        grid_width, anchor_boxes, 4) containing the processed boundary boxes
+        for each output, respectively
+        :param box_confidences: a list of numpy.ndarrays of shape (
+        grid_height, grid_width, anchor_boxes, 1) containing the processed
+        box confidences for each output, respectively
+        :param box_class_probs: a list of numpy.ndarrays of shape (
+        grid_height, grid_width, anchor_boxes, classes) containing the
+        processed box class probabilities for each output, respectively
+        :return: a tuple of (filtered_boxes, box_classes, box_scores):
+            filtered_boxes: a numpy.ndarray of shape (?, 4) containing all of
+            the filtered bounding boxes:
+            box_classes: a numpy.ndarray of shape (?,) containing the class
+            number that each box in filtered_boxes predicts, respectively
+            box_scores: a numpy.ndarray of shape (?) containing the box scores
+            for each box in filtered_boxes, respectively
         """
         box = [ele.reshape(-1, 4) for ele in boxes]
         box = np.concatenate(box)
@@ -129,6 +163,9 @@ class Yolo:
     def nms(self, filtered, thresh, scores):
         """
         function that performs non-maximun suppresion
+        :param thresh: threshold
+        :param scores: threshold
+        :return: the value to keep
         """
         x1 = filtered[:, 0]
         y1 = filtered[:, 1]
@@ -161,6 +198,20 @@ class Yolo:
         """
         :param filtered_boxes: a numpy.ndarray of shape (?, 4) containing all
         of the filtered bounding boxes
+        :param box_classes: a numpy.ndarray of shape (?,) containing the
+        class number for the class that filtered_boxes predicts, respectively
+        :param box_scores: a numpy.ndarray of shape (?) containing the box
+        scores for each box in filtered_boxes, respectively
+        :return: a tuple of (box_predictions, predicted_box_classes,
+        predicted_box_scores):
+            box_predictions: a numpy.ndarray of shape (?, 4) containing all of
+            the predicted bounding boxes ordered by class and box score
+            predicted_box_classes: a numpy.ndarray of shape (?,) containing the
+            class number for box_predictions ordered by class and box score,
+            respectively
+            predicted_box_scores: a numpy.ndarray of shape (?) containing the
+            box scores for box_predictions ordered by class and box score,
+            respectively
         """
         unique_classes = np.unique(box_classes)
 
